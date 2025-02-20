@@ -11,19 +11,22 @@ import newspaper from '../assets/newspaper.png';
 import { Home } from './screens/Home';
 import { Profile } from './screens/Profile';
 import { Settings } from './screens/Settings';
-import { Updates } from './screens/Updates';
+import { Add } from './screens/Add';
+import { History } from './screens/History';
+import { Quote } from './screens/Quote';
 import { NotFound } from './screens/NotFound';
+
+import { IconButton } from 'react-native-paper';
 
 const HomeTabs = createBottomTabNavigator({
   screens: {
     Home: {
       screen: Home,
       options: {
-        title: 'Feed',
+        title: 'Главная',
         tabBarIcon: ({ color, size }) => (
-          <Image
-            source={newspaper}
-            tintColor={color}
+          <IconButton
+            icon={"home"}
             style={{
               width: size,
               height: size,
@@ -32,13 +35,43 @@ const HomeTabs = createBottomTabNavigator({
         ),
       },
     },
-    Updates: {
-      screen: Updates,
+    Add: {
+      screen: Add,
       options: {
+        title: 'Добавить запись',
         tabBarIcon: ({ color, size }) => (
-          <Image
-            source={bell}
-            tintColor={color}
+          <IconButton
+            icon={"plus"}
+            style={{
+              width: size,
+              height: size,
+            }}
+          />
+        ),
+      },
+    },
+    History: {
+      screen: History,
+      options: {
+        title: 'История',
+        tabBarIcon: ({ color, size }) => (
+          <IconButton
+            icon={"history"}
+            style={{
+              width: size,
+              height: size,
+            }}
+          />
+        ),
+      },
+    },
+    Quote: {
+      screen: Quote,
+      options: {
+        title: 'Получить цитату',
+        tabBarIcon: ({ color, size }) => (
+          <IconButton
+            icon={"request"}
             style={{
               width: size,
               height: size,
@@ -58,29 +91,6 @@ const RootStack = createNativeStackNavigator({
         title: 'Home',
         headerShown: false,
       },
-    },
-    Profile: {
-      screen: Profile,
-      linking: {
-        path: ':user(@[a-zA-Z0-9-_]+)',
-        parse: {
-          user: (value) => value.replace(/^@/, ''),
-        },
-        stringify: {
-          user: (value) => `@${value}`,
-        },
-      },
-    },
-    Settings: {
-      screen: Settings,
-      options: ({ navigation }) => ({
-        presentation: 'modal',
-        headerRight: () => (
-          <HeaderButton onPress={navigation.goBack}>
-            <Text>Close</Text>
-          </HeaderButton>
-        ),
-      }),
     },
     NotFound: {
       screen: NotFound,
