@@ -1,11 +1,16 @@
 import { Text } from '@react-navigation/elements';
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import { TextInput } from 'react-native-paper';
+import { useState } from 'react';
 
 export function Add() {
+  
   return (
-    <View style={styles.container}>
-      <Text>Updates Screen</Text>
-    </View>
+    <SafeAreaView style={styles.container}>
+        <Text>Добавление благодарности</Text>
+        <TextInput/>
+    </SafeAreaView>
   );
 }
 
