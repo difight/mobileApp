@@ -4,6 +4,8 @@ import * as SplashScreen from 'expo-splash-screen';
 import * as React from 'react';
 import { Navigation } from './navigation';
 
+import 'setimmediate';
+
 Asset.loadAsync([
   ...NavigationAssets,
   require('./assets/newspaper.png'),
