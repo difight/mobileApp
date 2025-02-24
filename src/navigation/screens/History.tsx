@@ -2,20 +2,40 @@ import { Text } from '@react-navigation/elements';
 import { StyleSheet, View } from 'react-native';
 import Gratitude from '../../database/entity/Gratitude';
 import { useState, useEffect } from 'react';
+import { useQuery } from '@tanstack/react-query';
+import { List } from 'react-native-paper';
+
+const getData = async () => {
+  return await Gratitude.get()
+}
 
 export function History() {
   const [gratitudes, setGratitude] = useState([])
+  const [listGratitudes, setListGratitudes] = useState([])
+
+  const { data, isLoading, error } = useQuery({queryKey: ['gratitude'], queryFn: getData});
   useEffect(() => {
-    const getData = async () => {
-      const fetch =  await Gratitude.get()
-      console.log('fetch=', fetch)
-      setGratitude(fetch)
+    setGratitude(data?.docs)
+  },[data])
+
+  useEffect(() => {
+    console.log(gratitudes)
+    if (gratitudes) {
+      const list = gratitudes.map((item) => (
+          <List.Item key={item?._id} title={item?.text}/>
+        )
+      )
+      setListGratitudes(list)
     }
-    getData()
-  },[])
+
+  }, [gratitudes])
+
   return (
     <View style={styles.container}>
       <Text>History Screen</Text>
+      <List.Section>
+        {listGratitudes}
+      </List.Section>
     </View>
   );
 }

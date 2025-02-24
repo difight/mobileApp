@@ -4,8 +4,11 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { TextInput, Button } from 'react-native-paper';
 import { useState } from 'react';
 import Gratitude from '../../database/entity/Gratitude';
+import { useQueryClient } from '@tanstack/react-query';
 
 export function Add() {
+
+  const queryClient = useQueryClient();
   const [text, setText] = useState('')
   const onChangeText = (value: string) => {
     setText(value)
@@ -13,6 +16,7 @@ export function Add() {
   const onPress = async() => {
     let object = await Gratitude.add({text})
     if (object) {
+      queryClient.invalidateQueries({ queryKey: ['gratitude'] })
       setText('')
     }
   }
@@ -21,7 +25,7 @@ export function Add() {
         <Text>Добавление благодарности</Text>
         <TextInput label={"Напишите свою благодарность на сегодня"} value={text} onChangeText={onChangeText} multiline={true} style={styles.textarea}/>
         <Button mode="contained" onPress={onPress}>
-          Добавить благодарность
+          Добавить
         </Button>
     </SafeAreaView>
   );

@@ -1,23 +1,17 @@
 import "setimmediate"
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { HeaderButton, Text } from '@react-navigation/elements';
 import {
   createStaticNavigation,
   StaticParamList,
 } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { Image } from 'react-native';
-import bell from '../assets/bell.png';
-import newspaper from '../assets/newspaper.png';
 import { Home } from './screens/Home';
-import { Profile } from './screens/Profile';
-import { Settings } from './screens/Settings';
 import { Add } from './screens/Add';
 import { History } from './screens/History';
 import { Quote } from './screens/Quote';
 import { NotFound } from './screens/NotFound';
 
-import { IconButton } from 'react-native-paper';
+import { IconButton, BottomNavigation } from 'react-native-paper';
 
 const HomeTabs = createBottomTabNavigator({
   screens: {
@@ -72,7 +66,7 @@ const HomeTabs = createBottomTabNavigator({
         title: 'Получить цитату',
         tabBarIcon: ({ color, size }) => (
           <IconButton
-            icon={"request"}
+            icon={"history"}
             style={{
               width: size,
               height: size,

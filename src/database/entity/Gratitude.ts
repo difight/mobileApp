@@ -1,5 +1,5 @@
 import ApiDatabase from "../ApiDatabase";
-import moment from 'moment';
+import { getCurrentDateTime } from "../../lib/time";
 
 class Gratitude extends ApiDatabase{
   constructor() {
@@ -7,9 +7,7 @@ class Gratitude extends ApiDatabase{
   }
   async add(data:object) {
     try {
-        const now = moment()
-        console.log('now=',now)
-        const doc = await this.post({...data, type: this.type})
+        const doc = await this.post({...data, type: this.type, created: getCurrentDateTime()})
         console.log('Document added:', doc);
         return doc
     } catch(error) {
