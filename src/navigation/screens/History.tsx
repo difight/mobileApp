@@ -1,5 +1,5 @@
 import { Text } from '@react-navigation/elements';
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet, SafeAreaView, ScrollView } from 'react-native';
 import Gratitude from '../../database/entity/Gratitude';
 import { useState, useEffect } from 'react';
 import { useQuery } from '@tanstack/react-query';
@@ -22,7 +22,7 @@ export function History() {
     console.log(gratitudes)
     if (gratitudes) {
       const list = gratitudes.map((item) => (
-          <List.Item key={item?._id} title={item?.text}/>
+          <List.Item key={item?._id} title={item?.text} left={() => <Text>{item?.created}</Text>}/>
         )
       )
       setListGratitudes(list)
@@ -31,12 +31,14 @@ export function History() {
   }, [gratitudes])
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       <Text>History Screen</Text>
-      <List.Section>
-        {listGratitudes}
-      </List.Section>
-    </View>
+      <ScrollView>
+        <List.Section>
+          {listGratitudes}
+        </List.Section>
+      </ScrollView>
+    </SafeAreaView>
   );
 }
 
