@@ -1,32 +1,37 @@
 import { Text } from '@react-navigation/elements';
 import { StyleSheet } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { TextInput, Button } from 'react-native-paper';
-import { useState } from 'react';
-import Gratitude from '../../database/entity/Gratitude';
-import { useQueryClient } from '@tanstack/react-query';
+import { GratitudeNew } from '../../component/gratitude/new';
+import Gratitude from "../../database/entity/Gratitude";
+import { useState, useEffect } from 'react';
 
-export function Add() {
-
-  const queryClient = useQueryClient();
-  const [text, setText] = useState('')
-  const onChangeText = (value: string) => {
-    setText(value)
-  }
-  const onPress = async() => {
-    let object = await Gratitude.add({text})
-    if (object) {
-      queryClient.invalidateQueries({ queryKey: ['gratitude'] })
-      setText('')
+export function Add() {  
+  const [canNew, setCanNew] = useState(true);
+  const [content, setContent] = useState('');
+  
+  useEffect(() => {
+    const check = async () => {
+        const checkData = await Gratitude.checkForPost()
+        if (!checkData) {
+            setCanNew(false)
+        }
     }
-  }
+    check()
+  }, [])
+
+  useEffect(() => {
+    let content = ''
+    if (canNew) {
+      content = <GratitudeNew/>
+    } else {
+      content = <Text>Сегодня вы уже добавляли благодарность, приходите завтра</Text>
+    }
+    setContent(content)
+  }, [canNew])
   return (
     <SafeAreaView style={styles.container}>
-        <Text>Добавление благодарности</Text>
-        <TextInput label={"Напишите свою благодарность на сегодня"} value={text} onChangeText={onChangeText} multiline={true} style={styles.textarea}/>
-        <Button mode="contained" onPress={onPress}>
-          Добавить
-        </Button>
+      <Text>Добавление благодарности</Text>
+        {content}
     </SafeAreaView>
   );
 }
@@ -37,9 +42,5 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     gap: 10,
-  },
-  textarea: {
-    width: 500,
-    height: 300
   }
 });

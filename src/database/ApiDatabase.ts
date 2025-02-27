@@ -28,6 +28,10 @@ class ApiDatabase {
     }
   }
 
+  async findByDB(props:object) {
+    return await this.#localDB.find(props)
+  }
+
   async post(data:object) {
     return await this.#localDB.post(data)
   }

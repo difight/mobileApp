@@ -1,5 +1,5 @@
 import ApiDatabase from "../ApiDatabase";
-import { getCurrentDateTime } from "../../lib/time";
+import { getCurrentDateTime, getCurrenStartEndDateTime} from "../../lib/datetime"
 
 class Gratitude extends ApiDatabase{
   constructor() {
@@ -19,6 +19,22 @@ class Gratitude extends ApiDatabase{
       const doc = await this.get(id)
       console.log('Document get:', doc);
       return doc
+    } catch(error) {
+        console.error('Error getting document:', error);
+    }
+  }
+  async checkForPost() {
+    try {
+      const startEndData = getCurrenStartEndDateTime()
+      const doc = await this.findByDB({
+        selector: {
+          created: { $gte: startEndData.dateFrom, $lte: startEndData.dateTo }          
+        }
+      })
+      if (doc) {
+        return false
+      }
+      return true
     } catch(error) {
         console.error('Error getting document:', error);
     }
