@@ -11,10 +11,10 @@ export function Add() {
   
   useEffect(() => {
     const check = async () => {
-        const checkData = await Gratitude.checkForPost()
-        if (!checkData) {
-            setCanNew(false)
-        }
+      const checkData = await Gratitude.checkForPost()
+      if (!checkData) {
+          setCanNew(false)
+      }
     }
     check()
   }, [])
