@@ -31,9 +31,11 @@ class Gratitude extends ApiDatabase{
           created: { $gte: startEndData.dateFrom, $lte: startEndData.dateTo }          
         }
       })
-      if (doc) {
+      
+      if (doc?.docs && doc?.docs.length > 0) {
         return false
       }
+      console.log('doc=', doc?.docs)
       return true
     } catch(error) {
         console.error('Error getting document:', error);

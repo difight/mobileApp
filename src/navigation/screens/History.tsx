@@ -1,7 +1,7 @@
 import { Text } from '@react-navigation/elements';
 import { StyleSheet, SafeAreaView, ScrollView } from 'react-native';
 import Gratitude from '../../database/entity/Gratitude';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { List, Portal, Modal } from 'react-native-paper';
 import { GratitudeItem } from '../../component/gratitude';
@@ -34,7 +34,7 @@ export function History() {
     setGratitude(data?.docs)
   },[data])
 
-  useEffect(() => {
+  useMemo(() => {
     console.log(gratitudes)
     if (gratitudes) {
       const list = gratitudes.map((item) => (
