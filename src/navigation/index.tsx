@@ -11,7 +11,16 @@ import { History } from './screens/History';
 import { Quote } from './screens/Quote';
 import { NotFound } from './screens/NotFound';
 
-import { IconButton, BottomNavigation } from 'react-native-paper';
+import { IconButton } from 'react-native-paper';
+
+import PushNotification from "react-native-push-notification";
+
+PushNotification.configure({
+  onNotification: function (notification) {
+    console.log("Уведомление получено:", notification);
+  },
+  requestPermissions: true, // Запрос разрешений при старте
+});
 
 const HomeTabs = createBottomTabNavigator({
   screens: {
